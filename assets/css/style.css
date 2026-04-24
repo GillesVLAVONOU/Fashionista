@@ -747,7 +747,7 @@ img { max-width: 100%; object-fit: cover; }
   .search-form {
     display: flex !important;
     width: 100%;
-    margin: .35rem 0 0 !important;
+    margin: .35rem 0 .45rem !important;
   }
 
   .search-form .input-group {
@@ -756,6 +756,23 @@ img { max-width: 100%; object-fit: cover; }
     display: flex;
     flex-wrap: nowrap;
     gap: .3rem;
+  }
+
+  .search-form,
+  .navbar-fashion .navbar-nav.align-items-center {
+    padding-left: .15rem;
+    padding-right: .15rem;
+  }
+
+  .navbar-fashion .navbar-nav.align-items-center .nav-item {
+    width: 100%;
+  }
+
+  .navbar-fashion .navbar-nav.align-items-center .btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .search-input {
