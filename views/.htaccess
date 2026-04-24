@@ -1,0 +1,36 @@
+# ============================================================
+#  Fashionista University — Apache Configuration
+# ============================================================
+
+Options -Indexes
+
+# ── Protect uploads directory (block PHP execution) ─────────
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|jsp|asp|sh|cgi)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ── Security headers ────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ── Protect sensitive files ──────────────────────────────────
+<FilesMatch "^(database\.sql|composer\.json|\.env)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ── Pretty URLs (optional) ───────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /fashionista/
+
+    # Block access to config directory
+    RewriteRule ^config/ - [F,L]
+    RewriteRule ^includes/ - [F,L]
+    RewriteRule ^models/ - [F,L]
+</IfModule>
