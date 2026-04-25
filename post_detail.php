@@ -64,7 +64,7 @@ require_once __DIR__ . '/includes/header.php';
           </p>
         <?php endif; ?>
 
-        <div class="d-flex align-items-center gap-3 py-3 border-top border-bottom my-3">
+        <div class="d-flex align-items-center gap-3 py-3 border-top border-bottom my-3 post-detail-actions">
           <button class="btn-like d-flex align-items-center gap-2 <?= $isLiked ? 'liked' : '' ?>"
                   data-post-id="<?= (int)$post['id'] ?>"
                   style="background:none;border:none;cursor:pointer;font-size:1rem;font-weight:600;">
@@ -80,9 +80,9 @@ require_once __DIR__ . '/includes/header.php';
           </span>
 
           <?php if ($isOwner): ?>
-            <div class="ms-auto d-flex gap-2">
+            <div class="ms-auto d-flex gap-2 post-detail-owner-actions">
               <a href="<?= SITE_URL ?>/delete_post.php?post_id=<?= (int)$post['id'] ?>&csrf=<?= csrfToken() ?>"
-                 class="btn btn-sm btn-outline-danger rounded-pill"
+                 class="btn btn-sm btn-outline-danger rounded-pill post-detail-delete-btn"
                  onclick="return confirm('Supprimer cette creation ?')">
                 <i class="bi bi-trash me-1"></i>Supprimer
               </a>

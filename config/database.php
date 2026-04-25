@@ -4,10 +4,10 @@
 //  Modify DB_HOST, DB_NAME, DB_USER, DB_PASS for your env.
 // ============================================================
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'fashionista_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_HOST', 'sql110.infinityfree.com');
+define('DB_NAME', 'if0_41748148_fashionista');
+define('DB_USER', 'if0_41748148');
+define('DB_PASS', 'gilles62862767');
 define('DB_CHARSET', 'utf8mb4');
 
 /**

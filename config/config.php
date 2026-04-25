@@ -6,7 +6,8 @@
 // ── Site identity ──────────────────────────────────────────
 define('SITE_NAME',    'Fashionista University');
 define('SITE_TAGLINE', 'Exprimez votre créativité');
-define('SITE_URL',     'http://localhost/fashionista'); // no trailing slash
+define('SITE_URL',     'https://fashionista.wuaze.com'); // no trailing slash
+date_default_timezone_set('Africa/Lagos');
 
 // ── Upload directories ─────────────────────────────────────
 define('UPLOAD_ROOT',    __DIR__ . '/../uploads/');

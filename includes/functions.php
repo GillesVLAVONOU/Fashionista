@@ -218,6 +218,14 @@ function sendPasswordResetEmail(string $toEmail, string $toName, string $resetLi
     return sendAppEmail($toEmail, $toName, $subject, $html, $text);
 }
 
+function setLastMailError(string $message): void {
+    $GLOBALS['last_mail_error'] = $message;
+}
+
+function getLastMailError(): string {
+    return (string)($GLOBALS['last_mail_error'] ?? '');
+}
+
 /**
  * Send a generic email.
  */
@@ -250,16 +258,21 @@ function sendMailFunctionEmail(string $toEmail, string $toName, string $subject,
         . $htmlBody . "\r\n"
         . "--{$boundary}--\r\n";
 
-    return @mail(
+    $sent = @mail(
         formatEmailAddress($toEmail, $toName),
         encodeEmailHeader($subject),
         $body,
         implode("\r\n", $headers)
     );
+    if (!$sent) {
+        setLastMailError('La fonction mail() a echoue sur le serveur.');
+    }
+    return $sent;
 }
 
 function sendSmtpEmail(string $toEmail, string $toName, string $subject, string $htmlBody, string $textBody = ''): bool {
     if (SMTP_HOST === '') {
+        setLastMailError('SMTP_HOST est vide.');
         return false;
     }
 
@@ -272,6 +285,7 @@ function sendSmtpEmail(string $toEmail, string $toName, string $subject, string 
     );
 
     if (!$socket) {
+        setLastMailError('Connexion SMTP impossible: ' . $errstr . ' (' . $errno . ')');
         return false;
     }
 
@@ -284,7 +298,7 @@ function sendSmtpEmail(string $toEmail, string $toName, string $subject, string 
         if (strtolower(SMTP_ENCRYPTION) === 'tls') {
             smtpCommand($socket, 'STARTTLS', [220]);
             if (!stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
-                throw new RuntimeException('TLS failed');
+                throw new RuntimeException('Echec de negotiation TLS.');
             }
             smtpCommand($socket, 'EHLO localhost', [250]);
         }
@@ -325,6 +339,7 @@ function sendSmtpEmail(string $toEmail, string $toName, string $subject, string 
         fclose($socket);
         return true;
     } catch (Throwable $e) {
+        setLastMailError($e->getMessage());
         fclose($socket);
         return false;
     }
@@ -342,6 +357,12 @@ function smtpExpect($socket, array $okCodes): void {
         if (strlen($line) >= 4 && $line[3] === ' ') {
             break;
         }
+    }
+
+    if ($response === '') {
+        $meta = stream_get_meta_data($socket);
+        $reason = !empty($meta['timed_out']) ? 'Aucune reponse SMTP (timeout).' : 'Aucune reponse SMTP recue.';
+        throw new RuntimeException($reason);
     }
 
     $code = (int)substr($response, 0, 3);

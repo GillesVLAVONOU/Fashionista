@@ -10,7 +10,9 @@ if (isLoggedIn()) {
 $pageTitle = 'Mot de passe oublie';
 $activePage = '';
 $debugResetLink = $_SESSION['password_reset_debug_link'] ?? null;
+$mailError = $_SESSION['password_reset_mail_error'] ?? null;
 unset($_SESSION['password_reset_debug_link']);
+unset($_SESSION['password_reset_mail_error']);
 
 require_once __DIR__ . '/includes/header.php';
 ?>
@@ -30,6 +32,9 @@ require_once __DIR__ . '/includes/header.php';
         <div class="alert alert-warning small">
           L email n a pas pu etre envoye depuis cet environnement. Utilisez ce lien local de reinitialisation :
           <a href="<?= h($debugResetLink) ?>" class="fw-semibold">ouvrir le lien</a>
+          <?php if ($mailError): ?>
+            <div class="mt-2"><strong>Diagnostic SMTP :</strong> <?= h($mailError) ?></div>
+          <?php endif; ?>
         </div>
       <?php endif; ?>
 

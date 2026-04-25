@@ -151,6 +151,7 @@ if ($action === 'request_reset') {
         $sent = sendPasswordResetEmail($user['email'], $user['full_name'], $resetLink);
         if (!$sent) {
             $_SESSION['password_reset_debug_link'] = $resetLink;
+            $_SESSION['password_reset_mail_error'] = getLastMailError();
         }
     }
 

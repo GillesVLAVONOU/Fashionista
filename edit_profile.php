@@ -167,10 +167,10 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <!-- Buttons -->
-            <div class="col-12 d-flex gap-2 justify-content-end pt-2">
+            <div class="col-12 d-flex gap-2 justify-content-end pt-2 edit-profile-actions">
               <a href="<?= SITE_URL ?>/profile.php?id=<?= currentUserId() ?>"
-                 class="btn btn-light rounded-pill px-4">Annuler</a>
-              <button type="submit" class="btn btn-fashion px-5">
+                 class="btn btn-light rounded-pill px-4 edit-profile-cancel-btn">Annuler</a>
+              <button type="submit" class="btn btn-fashion px-5 edit-profile-save-btn">
                 <i class="bi bi-check-lg me-2"></i>Enregistrer
               </button>
             </div>

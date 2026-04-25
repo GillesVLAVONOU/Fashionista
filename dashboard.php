@@ -45,7 +45,7 @@ require_once __DIR__ . '/includes/header.php';
 <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
   <div>
     <h1 class="mb-0" style="font-size:1.7rem">
-      Bonjour, <span style="color:var(--clr-primary)"><?= h($user['full_name']) ?></span> 👋
+      Bonjour, <span style="color:var(--clr-primary)"><?= h($user['full_name']) ?></span> 
     </h1>
     <p class="text-muted mb-0 small">Voici un aperçu de votre activité sur Fashionista</p>
   </div>
